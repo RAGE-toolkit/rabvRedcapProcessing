@@ -1,0 +1,19 @@
+Package: redcapProcessing
+Title: Rabv data processing before upload to RedCap
+Version: 0.0.0.9000
+Date: 2025-07-10
+Authors@R:c(
+    person("Martha", "Luka", , "m.luka.1@research.gla.ac.uk", role = c("aut", "cre"),
+           comment = c(ORCID = 0000-0001-6217-4426)),
+    person("Kirstyn", "Brunker", role = c("aut"))
+           ) 
+Description: "redcapProcessing" is a utility designed to automate the processing of rabies 
+            sequence data prior to uploading to REDCap. This function streamlines 
+            data preparation steps, ensuring consistency, reducing manual errors, 
+            and minimizing interpersonal variability in data formatting and curation.
+License: `use_mit_license()`
+Encoding: UTF-8
+Depends: 
+    R (>= 4.5.1)
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
