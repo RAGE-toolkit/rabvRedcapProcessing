@@ -1,18 +1,9 @@
 # rabv_redcap_processing
 R package to process metadata for upload to redcap
 
-# redcapProcessing
 
 <!-- badges: start -->
 <!-- badges: end -->
-
-
-                __                  ___                                 _           
-  ____ ___  ___/ /____ ___ _ ___   / _ \ ____ ___  ____ ___  ___  ___  (_)___  ___ _
- / __// -_)/ _  // __// _ `// _ \ / ___// __// _ \/ __// -_)(_-< (_-< / // _ \/ _ `/
-/_/   \__/ \_,_/ \__/ \_,_// .__//_/   /_/   \___/\__/ \__//___//___//_//_//_/\_, / 
-                          /_/                                                /___/  
-
 
 
 ## Table of Contents
@@ -46,14 +37,14 @@ This R package is a collection of scripts to automate the cleaning and processin
 
 ## Installation
 
-The `redcapProcessing` package facilitates rapid, reproducible data processing.
+The `rabv_redcap_processing` package facilitates rapid, reproducible data processing.
 
 
 ```r
 
-devtools::install_github("/redcapProcessing")
+devtools::install_github("RAGE-toolkit/rabv_redcap_processing")
 
-library(redcapProcessing)
+library(rabv_redcap_processing)
 
 ```
 
