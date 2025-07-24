@@ -1,52 +1,78 @@
-# rabv_redcap_processing
-R package to process metadata for upload to redcap
+# rabvRedcapProcessing
 
+**Tools for processing rabies metadata for REDCap upload**
 
 <!-- badges: start -->
+[![pkgdown](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://RAGE-toolkit.github.io/rabvRedcapProcessing/)
 <!-- badges: end -->
 
+---
 
 ## Table of Contents
 
-1. [Introduction](#Introduction)
-2. [Workflow](#Workflow)
-3. [Installation](#contributors)
+1. [Introduction](#introduction)
+2. [Workflow](#workflow)
+3. [Installation](#installation)
+4. [Bug Reports](#bug-reports)
+5. [Contributors](#contributors)
 
+---
 
 ## Introduction
 
-This R package is a collection of scripts to automate the cleaning and processing of rabies genetic data and metadata before auploading to RedCap. 
+`rabvRedcapProcessing` is an R package designed to streamline the cleaning, validation, and formatting of rabies lab metadata before uploading to REDCap. It automates common curation tasks including:
+
+- Matching data to a REDCap dictionary
+- Handling common mismatches and blank fields
+- Recoding labels to dictionary codes
+- Creating REDCap-compatible repeat instruments (diagnostic and sequencing forms)
+
+This ensures data consistency across multiple labs and minimizes manual formatting errors.
+
+---
 
 ## Workflow
 
-![Flow of functions](inst/figures/workflow.png)
+The typical workflow is illustrated below:
 
-**redcapProcessing workflow**. 
+![Workflow diagram](inst/figures/workflow.png)
 
-| Function                   | Description                                          | Input        | Output       |
-|----------------------------|------------------------------------------------------|--------------|--------------|
-| `read_data()`   | Read and summarise the data  | CSV file   | CSV          |
-| `process_data()` | Create a final diagnosis   | R object | R object      |
-| `read_and_parse_dict()` | Read dict and create mini dicts of coded values   | filePath | R object    |
-| `compare_cols_to_dict()` | Compare columns in data vs dictionary        | R object    | R object        |
-| `scan_mismatched_levels()` | Scan the coded columns to ID any non-coded values in the data  | R object    | R object    |
-| `recode_data()` | Code columns as specified by mini dicts   | R object  | R object       |
-| `final_processing()` | Create repeat instances; ensure dict cols in are in data      | R object    | R object   |
-| `express_process()` | Skip all the mini steps & get your data upload ready | CSV file   | R vector     |
+| Function                   | Description                                              | Input        | Output                         |
+|----------------------------|----------------------------------------------------------|--------------|--------------------------------|
+| `read_data()`              | Load and summarize input metadata                        | CSV file     | Data frame + duplicates report |
+| `read_and_parse_dict()`    | Load REDCap dictionary and extract coded lists           | dictPath     | List of mini dictionaries      |
+| `compare_cols_to_dict()`   | Check for missing or extra columns vs REDCap dictionary  | Data + dict  | Harmonized data frame          |
+| `scan_mismatched_levels()` | Scan for values that don't match allowed dictionary codes| Data + dicts | Warnings                       |
+| `tidy_up_values()`         | Fix common value mismatches (e.g., typos, synonyms)      | Data         | Cleaned data                   |
+| `create_final_diagnosis()` | Derive final diagnostic result from test columns         | Data         | updated `diagnostic_result`(df)|
+| `recode_data()`            | Recode labels to dictionary codes                        | Data + dicts | Recoded data frame             |
+| `final_processing()`       | Final formatting & generation of REDCap-ready forms      | Data + dict  | Diagnostic + Sequencing forms  |
 
+---
 
 ## Installation
 
-The `rabv_redcap_processing` package facilitates rapid, reproducible data processing.
+Install directly from GitHub using `devtools`:
+
+```r
+# install.packages("devtools") # if not already installed
+devtools::install_github("RAGE-toolkit/rabv_redcap_processing")
+library(rabvRedcapProcessing)
+
+```
+
+## Bug reports
+
+Please report issues or suggest improvements via GitHub:
 
 
 ```r
 
-devtools::install_github("RAGE-toolkit/rabv_redcap_processing")
-
-library(rabv_redcap_processing)
+URL: https://github.com/RAGE-toolkit/rabv_redcap_processing
+BugReports: https://github.com/RAGE-toolkit/rabv_redcap_processing/issues
 
 ```
+
 
 ### Contributors
 

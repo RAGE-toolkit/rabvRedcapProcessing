@@ -1,0 +1,16 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/compare_cols_to_dict.html</loc></url>
+<url><loc>/reference/create_diagnostic_result_rule.html</loc></url>
+<url><loc>/reference/final_processing.html</loc></url>
+<url><loc>/reference/get_redcap_form_columns.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/read_and_parse_dict.html</loc></url>
+<url><loc>/reference/read_data.html</loc></url>
+<url><loc>/reference/recode_data.html</loc></url>
+<url><loc>/reference/scan_mismatched_levels.html</loc></url>
+<url><loc>/reference/tidy_up_values.html</loc></url>
+</urlset>
+

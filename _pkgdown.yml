@@ -1,0 +1,32 @@
+pkgdown:
+  title: "rabvRedcapProcessing"
+  url: https://RAGE-toolkit.github.io/rabvRedcapProcessing
+
+template:
+  bootstrap: 5
+  bootswatch: flatly
+
+navbar:
+  structure:
+    left:
+      - reference
+      - articles
+    right:
+      - github
+  components:
+    github:
+      icon: fa-github
+      href: https://github.com/RAGE-toolkit/rabv_redcap_processing
+
+reference:
+  - title: "Core Functions"
+    contents:
+      - read_data
+      - read_and_parse_dict
+      - compare_cols_to_dict
+      - scan_mismatched_levels
+      - tidy_up_values
+      - recode_data
+      - create_diagnostic_result_rule
+      - final_processing
+      - get_redcap_form_columns

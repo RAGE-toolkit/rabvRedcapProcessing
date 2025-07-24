@@ -1,19 +1,22 @@
-Package: redcapProcessing
-Title: Rabv data processing before upload to RedCap
+Package: rabvRedcapProcessing
+Title: Tools for Processing Rabies Lab Data for REDCap Upload
 Version: 0.0.0.9000
-Date: 2025-07-10
-Authors@R:c(
-    person("Martha", "Luka", , "m.luka.1@research.gla.ac.uk", role = c("aut", "cre"),
-           comment = c(ORCID = 0000-0001-6217-4426)),
-    person("Kirstyn", "Brunker", role = c("aut"))
-           ) 
-Description: "redcapProcessing" is a utility designed to automate the processing of rabies 
-            sequence data prior to uploading to REDCap. This function streamlines 
-            data preparation steps, ensuring consistency, reducing manual errors, 
-            and minimizing interpersonal variability in data formatting and curation.
+Date: 2025-07-24
+Authors@R: c(
+    person("Martha", "Luka", email = "m.luka.1@research.gla.ac.uk",
+           role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6217-4426")),
+    person("Kirstyn", "Brunker", role = "aut")
+    )
+Description: Provides a suite of functions to support the cleaning, validation, 
+    harmonization, and formatting of rabies laboratory data prior to uploading 
+    to REDCap. The package standardizes common data processing steps including 
+    recoding based on dictionary mappings, handling duplicates, generating REDCap-compatible 
+    diagnostic and sequencing forms, and classifying diagnostic results from multiple test inputs. 
+    These tools are designed to minimize manual effort and interpersonal variability 
+    in multi-country genomic surveillance workflows.
 License: `use_mit_license()`
 Encoding: UTF-8
-Depends: 
+Depends:
     R (>= 4.5.1)
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
