@@ -53,3 +53,6 @@ scan_mismatched_levels <- function(dayta, dicts, col_to_check) {
 
   invisible(not_in_dict)
 }
+
+
+

@@ -14,8 +14,8 @@
 #' @examples
 #' dicts <- read_and_parse_dict("data_dictionary.csv")
 #' dicts[["sample_buffer"]]
-#' # > 0 = Glycerol-saline
-#' # > 1 = RNAshield
+#' # > Glycerol-saline = Glycerol-saline
+#' # > RNAshield = RNAshield
 #' # > ...
 
 read_and_parse_dict <- function(dictPath) {
