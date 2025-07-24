@@ -56,7 +56,7 @@ Install directly from GitHub using `devtools`:
 
 ```r
 # install.packages("devtools") # if not already installed
-devtools::install_github("RAGE-toolkit/rabv_redcap_processing")
+devtools::install_github("RAGE-toolkit/rabvRedcapProcessing")
 library(rabvRedcapProcessing)
 
 ```

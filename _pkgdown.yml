@@ -16,7 +16,7 @@ navbar:
   components:
     github:
       icon: fa-github
-      href: https://github.com/RAGE-toolkit/rabv_redcap_processing
+      href: https://github.com/RAGE-toolkit/rabvRedcapProcessing
 
 reference:
   - title: "Core Functions"
