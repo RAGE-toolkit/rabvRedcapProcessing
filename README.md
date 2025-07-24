@@ -68,8 +68,8 @@ Please report issues or suggest improvements via GitHub:
 
 ```r
 
-URL: https://github.com/RAGE-toolkit/rabv_redcap_processing
-BugReports: https://github.com/RAGE-toolkit/rabv_redcap_processing/issues
+URL: https://github.com/RAGE-toolkit/rabvRedcapProcessing
+BugReports: https://github.com/RAGE-toolkit/rabvRedcapProcessing/issues
 
 ```
 
