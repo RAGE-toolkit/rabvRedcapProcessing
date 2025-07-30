@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @importFrom dplyr group_by mutate row_number ungroup
-#' @importFrom lubridate dmy
+#' @importFrom lubridate parse_date_time
 #'
 #' @examples
 #' lab_data <- read_data("data/my_lab_records.csv")
@@ -20,10 +20,10 @@ read_data <- function(filepath) {
     dplyr::group_by(sample_id) %>%
     dplyr::mutate(
       duplicate_id = dplyr::row_number(),
-      ngs_rundate = lubridate::parse_date_time(
-  as.character(ngs_rundate),
-  orders = c("d-b-y", "dmy", "ymd", "mdy", "d-m-y", "y-m-d")
-    ) 
+      lubridate::parse_date_time(
+        ngs_rundate,
+        orders = c("d-b-y", "dmy", "ymd", "dmy", "dmY", "Ymd", "Y-m-d", "d/m/Y", "d-m-Y")
+      )
       ) %>%
     dplyr::ungroup()
   
