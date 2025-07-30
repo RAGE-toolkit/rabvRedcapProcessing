@@ -12,7 +12,8 @@
 #' \dontrun{
 #' cleaned_df <- tidy_up_values(raw_df)
 #'}
-#' @importFrom dplyr case_when mutate
+#'
+#' @importFrom dplyr mutate case_when
 #' @importFrom stringr str_detect str_to_lower str_replace_all
 #' @export
 tidy_up_values <- function(df) {

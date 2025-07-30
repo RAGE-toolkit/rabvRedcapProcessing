@@ -20,6 +20,8 @@
 #' }
 #'
 #' @importFrom utils read.csv
+#' @importFrom stats setNames
+#' @importFrom base setdiff names paste
 #' @export
 compare_cols_to_dict <- function(dayta, dictPath) {
   # Load dictionary

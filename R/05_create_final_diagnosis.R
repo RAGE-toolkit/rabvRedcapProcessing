@@ -29,7 +29,6 @@
 #' @return A character vector (`"Positive"`, `"Negative"`, `"Inconclusive"`, or `NA`)
 #'   representing the overall diagnostic interpretation for each row.
 #'
-#' @export
 #' @examples
 #' df <- tibble::tibble(
 #'   lateral_flow_test = c("Positive", "Negative", NA),
@@ -39,6 +38,9 @@
 #'   drit = c(NA, "Negative", NA)
 #' )
 #' df$diagnosis <- create_diagnostic_result_rule(df)
+#' 
+#' @importFrom purrr pmap_chr
+#' @export
 create_diagnostic_result_rule <- function(df) {
   n <- nrow(df)
   

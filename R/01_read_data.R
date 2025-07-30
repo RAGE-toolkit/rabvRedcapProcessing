@@ -9,6 +9,9 @@
 #' @return A tibble with cleaned and annotated data
 #' @export
 #'
+#' @importFrom dplyr group_by mutate row_number ungroup
+#' @importFrom lubridate dmy
+#'
 #' @examples
 #' lab_data <- read_data("data/my_lab_records.csv")
 read_data <- function(filepath) {
@@ -20,10 +23,10 @@ read_data <- function(filepath) {
       ngs_rundate = lubridate::dmy(ngs_rundate)
     ) %>%
     dplyr::ungroup()
-
+  
   # Console feedback
   message("✅ Your data contains ", nrow(dayta), " entries.")
   message("🔁 Detected ", sum(duplicated(dayta$sample_id)), " duplicate sample IDs.")
-
+  
   return(dayta)
 }

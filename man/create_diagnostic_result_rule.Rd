@@ -55,4 +55,5 @@ df <- tibble::tibble(
   drit = c(NA, "Negative", NA)
 )
 df$diagnosis <- create_diagnostic_result_rule(df)
+
 }

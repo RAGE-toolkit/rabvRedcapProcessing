@@ -20,6 +20,7 @@
 #' scan_mismatched_levels(my_data, myDicts, "sample_buffer")
 #' }
 #'
+#' @importFrom glue glue
 #' @export
 scan_mismatched_levels <- function(dayta, dicts, col_to_check) {
   # Check if the column is in the dictionary

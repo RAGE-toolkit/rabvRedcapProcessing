@@ -23,5 +23,4 @@ dicts <- read_and_parse_dict("data_dictionary.csv")
 dicts[["sample_buffer"]]
 # > Glycerol-saline = Glycerol-saline
 # > RNAshield = RNAshield
-# > ...
 }

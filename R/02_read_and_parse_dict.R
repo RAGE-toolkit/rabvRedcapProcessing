@@ -11,13 +11,17 @@
 #'
 #' @export
 #'
+#' @importFrom readr read_csv
+#' @importFrom dplyr filter mutate select
+#' @importFrom tibble deframe
+#' @importFrom stringr str_split str_trim str_split_fixed
+#' @importFrom purrr map
+#'
 #' @examples
 #' dicts <- read_and_parse_dict("data_dictionary.csv")
 #' dicts[["sample_buffer"]]
 #' # > Glycerol-saline = Glycerol-saline
 #' # > RNAshield = RNAshield
-#' # > ...
-
 read_and_parse_dict <- function(dictPath) {
   data_dict <- read.csv(dictPath, stringsAsFactors = FALSE)
 

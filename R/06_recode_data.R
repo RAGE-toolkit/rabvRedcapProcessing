@@ -36,6 +36,7 @@
 #' recoded <- recode_data(dicts, df)
 #' print(recoded)
 #'
+#' @importFrom glue glue
 #' @export
 recode_data <- function(dicts, dayta) {
   recoded_data <- dayta
