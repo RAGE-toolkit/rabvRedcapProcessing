@@ -15,6 +15,7 @@
 #' @importFrom tibble deframe
 #' @importFrom stringr str_split str_trim str_split_fixed
 #' @importFrom purrr map
+#' @importFrom magrittr %>%
 #'
 #' @examples
 #' dicts <- read_and_parse_dict("data_dictionary.csv")
@@ -26,7 +27,8 @@ read_and_parse_dict <- function(dictPath) {
 
   # Helper to parse single string of "code, label | code, label"
   parse_dict <- function(choice_str) {
-    pieces <- stringr::str_split(choice_str, "\\|")[[1]] %>% stringr::str_trim()
+    pieces <- stringr::str_split(choice_str, "\\|")[[1]] %>% 
+    stringr::str_trim()
     # key values
     kv <- purrr::map(pieces, ~{
       parts <- stringr::str_split_fixed(.x, ",", 2)
@@ -40,9 +42,7 @@ read_and_parse_dict <- function(dictPath) {
   dicts <- data_dict %>%
     dplyr::filter(.data$Choices..Calculations..OR.Slider.Labels != "") %>%
     dplyr::mutate(
-      dict = purrr::map(.data$Choices..Calculations..OR.Slider.Labels, parse_dict)
-    ) %>%
-    # dplyr::select(field = .data$Variable...Field.Name, dict) %>% # deprecated
+      dict = purrr::map(.data$Choices..Calculations..OR.Slider.Labels, parse_dict)) %>%
     dplyr::select("Variable...Field.Name", "dict") %>%
     tibble::deframe()
 
