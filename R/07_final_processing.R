@@ -46,7 +46,7 @@ get_redcap_form_columns <- function(dictPath) {
 #'
 #' @param mydata A data frame containing cleaned lab records. Must include a `sample_id` column and a `duplicate_id` column for repeat instance tracking.
 #' @param dictPath File path to the REDCap data dictionary (CSV format).
-#' @param access_group A string specifying the REDCap Data Access Group (DAG). Must be one of:
+#' @param access_group A string specifying the REDCap Data Access Group. Must be one of:
 #' `"east_africa"`, `"malawi"`, `"nigeria"`, `"peru"`, `"philippines"`.
 #'
 #' @return A named list with two tibbles:
@@ -82,14 +82,14 @@ final_processing <- function(mydata, dictPath,
   diagnostic_form <- mydata %>%
     dplyr::select(any_of(c("sample_id", diagnostic_columns))) %>%
     dplyr::mutate(
-      redcap_access_group = access_group,
+      redcap_data_access_group = access_group,
       across(everything(), ~replace_na(as.character(.), ""))
     )
   
   sequencing_form <- mydata %>%
     dplyr::mutate(
       redcap_repeat_instrument = "sequencing",
-      redcap_access_group = access_group
+      redcap_data_access_group = access_group
     ) %>%
     dplyr::select(any_of(c("sample_id", sequencing_columns))) %>%
     dplyr::mutate(across(everything(), ~replace_na(as.character(.), "")))

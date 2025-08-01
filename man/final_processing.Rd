@@ -15,7 +15,7 @@ final_processing(
 
 \item{dictPath}{File path to the REDCap data dictionary (CSV format).}
 
-\item{access_group}{A string specifying the REDCap Data Access Group (DAG). Must be one of:
+\item{access_group}{A string specifying the REDCap Data Access Group. Must be one of:
 \code{"east_africa"}, \code{"malawi"}, \code{"nigeria"}, \code{"peru"}, \code{"philippines"}.}
 }
 \value{
