@@ -15,6 +15,8 @@
 #'
 #' @importFrom dplyr mutate case_when
 #' @importFrom stringr str_detect str_to_lower str_replace_all
+#' @importFrom magrittr %>%
+#' 
 #' @export
 tidy_up_values <- function(df) {
   df_edited <- df %>%

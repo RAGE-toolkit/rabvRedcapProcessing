@@ -11,6 +11,7 @@
 #'
 #' @importFrom dplyr group_by mutate row_number ungroup
 #' @importFrom lubridate parse_date_time
+#' @importFrom magrittr %>%
 #'
 #' @examples
 #' lab_data <- read_data("data/my_lab_records.csv")

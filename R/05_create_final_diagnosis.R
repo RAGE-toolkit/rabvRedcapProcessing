@@ -40,6 +40,7 @@
 #' df$diagnosis <- create_diagnostic_result_rule(df)
 #' 
 #' @importFrom purrr pmap_chr
+#' 
 #' @export
 create_diagnostic_result_rule <- function(df) {
   n <- nrow(df)

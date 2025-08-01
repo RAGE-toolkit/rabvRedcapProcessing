@@ -14,6 +14,8 @@
 #' }
 #'
 #' @importFrom dplyr filter pull union
+#' @importFrom magrittr %>%
+#' 
 #' @export
 get_redcap_form_columns <- function(dictPath) {
   data_dict <- read.csv(dictPath, stringsAsFactors = FALSE)
