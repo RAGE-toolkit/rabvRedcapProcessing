@@ -4,29 +4,38 @@
 \alias{compare_cols_to_dict}
 \title{Compare REDCap Data Columns to Data Dictionary}
 \usage{
-compare_cols_to_dict(dayta, dictPath)
+compare_cols_to_dict(
+  dayta,
+  dictPath = system.file("extdata", "RABVlab_DataDictionary_redcap2025-08-04.csv",
+    package = "rabvRedcapProcessing")
+)
 }
 \arguments{
 \item{dayta}{A data frame or tibble representing your dataset (e.g., from REDCap export).}
 
-\item{dictPath}{A string. Path to the REDCap data dictionary in CSV format.}
+\item{dictPath}{Path to the REDCap data dictionary (CSV format). Defaults to an internal file included in the package.}
 }
 \value{
-A data frame with all columns defined in the dictionary. Any missing columns
-originally absent from the dataset will be added and filled with \code{NA}.
+A data frame that includes all columns defined in the dictionary.
+Any missing columns originally absent from the dataset will be added with \code{NA} values.
 }
 \description{
-This function compares the column names of a dataset against the variable names
-specified in a REDCap data dictionary. It reports discrepancies and adds any
-missing dictionary variables to the dataset as \code{NA} columns.
+Compares the column names of a dataset against the variable names
+specified in a REDCap data dictionary. By default, it uses a bundled dictionary
+included with the package, but users can specify a custom dictionary path via the \code{dictPath} argument.
 }
 \details{
-Useful for ensuring consistency between your dataset and a REDCap project structure,
-especially before importing data or validating fields.
+Any columns found in the dictionary but missing from the dataset will be added as blank (\code{NA}) columns.
+The function also reports any mismatches between the dataset and the dictionary.
+
+Useful for validating and aligning datasets with a REDCap project structure before import,
+recoding, or further processing.
 }
 \examples{
-\dontrun{
-updated_data <- compare_cols_to_dict(my_data, "REDCap_DataDictionary.csv")
-}
+# Use the default dictionary bundled with the package
+updated_data <- compare_cols_to_dict(my_data)
+
+# Or use a custom REDCap dictionary
+updated_data <- compare_cols_to_dict(my_data, "custom_dictionary.csv")
 
 }

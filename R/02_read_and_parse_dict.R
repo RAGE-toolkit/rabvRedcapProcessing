@@ -1,10 +1,15 @@
 #' Read and Parse REDCap Data Dictionary
 #'
-#' This function reads a REDCap data dictionary (CSV format) and parses the "Choices" column
-#' to create a named list of value-label pairs for use in data recoding. If the field is "country",
-#' a special parser allows both country codes and names to map to values.
+#' Reads a REDCap data dictionary (CSV format) and parses the "Choices" column
+#' to create a named list of value-label pairs for use in data recoding. By default,
+#' it loads an internal dictionary included with the package, but users can specify
+#' a different dictionary file via the `dictPath` argument.
 #'
-#' @param dictPath Path to the REDCap data dictionary CSV file.
+#' Special handling is provided for the "country" field, allowing both country names
+#' and codes to be valid inputs by building a dual-mapped dictionary.
+#'
+#' @param dictPath Path to the REDCap data dictionary CSV file. If not specified, a default
+#' dictionary included in the package will be used.
 #'
 #' @return A named list of named vectors, where each list element corresponds to a field name,
 #' and each named vector maps value codes to human-readable labels.
@@ -18,11 +23,18 @@
 #' @importFrom magrittr %>%
 #'
 #' @examples
-#' dicts <- read_and_parse_dict("data_dictionary.csv")
+#' # Use the default dictionary included with the package
+#' dicts <- read_and_parse_dict()
+#'
+#' # Or specify a custom dictionary path
+#' dicts <- read_and_parse_dict("path/to/my_dictionary.csv")
+#' 
 #' dicts[["sample_buffer"]]
 #' # > Glycerol-saline = Glycerol-saline
 #' # > RNAshield = RNAshield
-read_and_parse_dict <- function(dictPath) {
+read_and_parse_dict <- function(dictPath = system.file("extdata", 
+                                                       "RABVlab_DataDictionary_redcap2025-08-04.csv", 
+                                                       package = "rabvRedcapProcessing")) {
   data_dict <- read.csv(dictPath, stringsAsFactors = FALSE)
 
   # Helper to parse single string of "code, label | code, label"

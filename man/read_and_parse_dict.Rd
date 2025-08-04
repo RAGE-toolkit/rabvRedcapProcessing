@@ -4,22 +4,36 @@
 \alias{read_and_parse_dict}
 \title{Read and Parse REDCap Data Dictionary}
 \usage{
-read_and_parse_dict(dictPath)
+read_and_parse_dict(
+  dictPath = system.file("extdata", "RABVlab_DataDictionary_redcap2025-08-04.csv",
+    package = "rabvRedcapProcessing")
+)
 }
 \arguments{
-\item{dictPath}{Path to the REDCap data dictionary CSV file.}
+\item{dictPath}{Path to the REDCap data dictionary CSV file. If not specified, a default
+dictionary included in the package will be used.}
 }
 \value{
 A named list of named vectors, where each list element corresponds to a field name,
 and each named vector maps value codes to human-readable labels.
 }
 \description{
-This function reads a REDCap data dictionary (CSV format) and parses the "Choices" column
-to create a named list of value-label pairs for use in data recoding. If the field is "country",
-a special parser allows both country codes and names to map to values.
+Reads a REDCap data dictionary (CSV format) and parses the "Choices" column
+to create a named list of value-label pairs for use in data recoding. By default,
+it loads an internal dictionary included with the package, but users can specify
+a different dictionary file via the \code{dictPath} argument.
+}
+\details{
+Special handling is provided for the "country" field, allowing both country names
+and codes to be valid inputs by building a dual-mapped dictionary.
 }
 \examples{
-dicts <- read_and_parse_dict("data_dictionary.csv")
+# Use the default dictionary included with the package
+dicts <- read_and_parse_dict()
+
+# Or specify a custom dictionary path
+dicts <- read_and_parse_dict("path/to/my_dictionary.csv")
+
 dicts[["sample_buffer"]]
 # > Glycerol-saline = Glycerol-saline
 # > RNAshield = RNAshield

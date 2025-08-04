@@ -1,23 +1,25 @@
 #' Extract REDCap Form Column Names from Data Dictionary
 #'
-#' Parses a REDCap data dictionary CSV file to identify which variables belong to the
-#' diagnostic and sequencing forms. This helps define the expected structure for export
-#' into REDCap repeat instruments.
+#' Parses a REDCap data dictionary (CSV format) to identify which variables belong to the
+#' `diagnostic` and `sequencing` REDCap forms. This supports preparation of REDCap repeat
+#' instruments for data upload. A default dictionary bundled with the package is used unless a custom path is provided.
 #'
-#' @param dictPath A file path to the REDCap data dictionary (CSV format).
+#' @param dictPath Path to the REDCap data dictionary (CSV file). Defaults to an internal dictionary bundled with the package.
 #'
 #' @return A named list with three elements:
 #' \describe{
-#'   \item{diagnostic_columns}{A character vector of variable names for the diagnostic form.}
-#'   \item{sequencing_columns}{A character vector of variable names for the sequencing form. Includes `sample_id`, `redcap_repeat_instrument`, and `redcap_repeat_instance`.}
-#'   \item{all_dict_cols}{A character vector of all variables in the dictionary, including REDCap metadata columns.}
+#'   \item{diagnostic_columns}{Character vector of variable names for the diagnostic form.}
+#'   \item{sequencing_columns}{Character vector of variable names for the sequencing form, including REDCap repeat metadata.}
+#'   \item{all_dict_cols}{Character vector of all variables defined in the dictionary, including REDCap metadata columns.}
 #' }
 #'
 #' @importFrom dplyr filter pull union
 #' @importFrom magrittr %>%
-#' 
+#'
 #' @export
-get_redcap_form_columns <- function(dictPath) {
+get_redcap_form_columns <- function(dictPath = system.file("extdata", 
+                                                           "RABVlab_DataDictionary_redcap2025-08-04.csv", 
+                                                           package = "rabvRedcapProcessing")) {
   data_dict <- read.csv(dictPath, stringsAsFactors = FALSE)
   
   list(
@@ -39,32 +41,37 @@ get_redcap_form_columns <- function(dictPath) {
 
 #' Prepare Diagnostic and Sequencing REDCap Forms
 #'
-#' This function processes cleaned laboratory data and splits it into two REDCap-ready data frames:
-#' one for the `diagnostic` form and one for the `sequencing` form. It assigns REDCap metadata
-#' fields like `redcap_repeat_instrument`, `redcap_repeat_instance`, and `redcap_access_group`.
-#' It ensures all necessary fields exist based on the data dictionary and fills missing values with empty strings.
+#' Processes cleaned laboratory data and splits it into two REDCap-compatible data frames:
+#' one for the `diagnostic` form and another for the `sequencing` form. These are formatted
+#' for use with REDCap repeat instruments. The function uses a built-in REDCap dictionary
+#' by default, but you may provide a custom dictionary via the `dictPath` argument.
 #'
-#' @param mydata A data frame containing cleaned lab records. Must include a `sample_id` column and a `duplicate_id` column for repeat instance tracking.
-#' @param dictPath File path to the REDCap data dictionary (CSV format).
-#' @param access_group A string specifying the REDCap Data Access Group. Must be one of:
-#' `"east_africa"`, `"malawi"`, `"nigeria"`, `"peru"`, `"philippines"`.
+#' @param mydata A data frame containing cleaned lab records. Must include a `sample_id` and `duplicate_id` column.
+#' @param dictPath File path to the REDCap data dictionary (CSV format). Defaults to a dictionary bundled with the package.
+#' @param access_group A character string specifying the REDCap Data Access Group. Must be one of:
+#' `"east_africa"`, `"malawi"`, `"nigeria"`, `"peru"`, or `"philippines"`.
 #'
 #' @return A named list with two tibbles:
 #' \describe{
-#'   \item{diagnostic_form}{A data frame ready for REDCap import into the `diagnostic` repeat instrument.}
-#'   \item{sequencing_form}{A data frame ready for REDCap import into the `sequencing` repeat instrument.}
+#'   \item{diagnostic_form}{A tibble ready for REDCap import into the diagnostic form.}
+#'   \item{sequencing_form}{A tibble ready for REDCap import into the sequencing form.}
 #' }
 #'
 #' @details
-#' This function internally calls \code{\link{get_redcap_form_columns}} to determine which variables belong to each form.
-#' It assigns `redcap_repeat_instance` from the `duplicate_id` column, and sets the repeat instrument name accordingly.
-#' Blank values are replaced with empty strings, as expected by REDCap for import.
+#' Uses \code{\link{get_redcap_form_columns}} to extract form-specific variables.
+#' Ensures REDCap repeat instrument fields (`redcap_repeat_instrument`, `redcap_repeat_instance`)
+#' are properly set and all required fields are present. Missing fields are filled with `""`
+#' as required for REDCap imports.
 #'
 #' @importFrom dplyr mutate select any_of union across
 #' @importFrom tidyr replace_na
+#'
 #' @export
-final_processing <- function(mydata, dictPath,
+final_processing <- function(mydata, dictPath = system.file("extdata", 
+                                                            "RABVlab_DataDictionary_redcap2025-08-04.csv", 
+                                                            package = "rabvRedcapProcessing"),
                              access_group = c("east_africa", "malawi", "nigeria", "peru", "philippines")) {
+  # QC check that correct access group is given
   access_group <- match.arg(access_group)
   
   form_cols <- get_redcap_form_columns(dictPath)

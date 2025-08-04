@@ -9,7 +9,7 @@ scan_mismatched_levels(dayta, dicts, col_to_check)
 \arguments{
 \item{dayta}{A data frame or tibble containing the dataset to be checked.}
 
-\item{dicts}{A named list of dictionaries created from the REDCap dictionary (e.g., using \code{read_and_parse_dict()}),
+\item{dicts}{A named list of dictionaries created from the REDCap dictionary (typically from \code{read_and_parse_dict()}),
 where each element corresponds to a coded field and maps value labels to codes.}
 
 \item{col_to_check}{A string indicating the column name in \code{dayta} to check against the dictionary.}

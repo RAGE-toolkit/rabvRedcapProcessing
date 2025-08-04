@@ -4,7 +4,7 @@
 #' Returns (invisibly) any values that are not found in the dictionary and prints a message for review.
 #'
 #' @param dayta A data frame or tibble containing the dataset to be checked.
-#' @param dicts A named list of dictionaries created from the REDCap dictionary (e.g., using `read_and_parse_dict()`),
+#' @param dicts A named list of dictionaries created from the REDCap dictionary (typically from `read_and_parse_dict()`),
 #'              where each element corresponds to a coded field and maps value labels to codes.
 #' @param col_to_check A string indicating the column name in `dayta` to check against the dictionary.
 #'
