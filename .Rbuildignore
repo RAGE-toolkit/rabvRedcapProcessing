@@ -1,2 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^R/checkScripts\\.R\\.txt$
+^tools/checkScripts\\.R$
+
