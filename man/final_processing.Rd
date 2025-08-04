@@ -6,33 +6,51 @@
 \usage{
 final_processing(
   mydata,
-  dictPath,
+  dictPath = system.file("extdata", "RABVlab_DataDictionary_redcap2025-08-04.csv",
+    package = "rabvRedcapProcessing"),
   access_group = c("east_africa", "malawi", "nigeria", "peru", "philippines")
 )
 }
 \arguments{
-\item{mydata}{A data frame containing cleaned lab records. Must include a \code{sample_id} column and a \code{duplicate_id} column for repeat instance tracking.}
+\item{mydata}{A data frame containing cleaned lab records. Must include a \code{sample_id} and \code{duplicate_id} column.}
 
-\item{dictPath}{File path to the REDCap data dictionary (CSV format).}
+\item{dictPath}{File path to the REDCap data dictionary (CSV format). Defaults to a dictionary bundled with the package.}
 
-\item{access_group}{A string specifying the REDCap Data Access Group. Must be one of:
-\code{"east_africa"}, \code{"malawi"}, \code{"nigeria"}, \code{"peru"}, \code{"philippines"}.}
+\item{access_group}{A character string specifying the REDCap Data Access Group. Must be one of:
+\code{"east_africa"}, \code{"malawi"}, \code{"nigeria"}, \code{"peru"}, or \code{"philippines"}.}
 }
 \value{
 A named list with two tibbles:
 \describe{
-\item{diagnostic_form}{A data frame ready for REDCap import into the \code{diagnostic} repeat instrument.}
-\item{sequencing_form}{A data frame ready for REDCap import into the \code{sequencing} repeat instrument.}
+\item{diagnostic_form}{A tibble ready for REDCap import into the diagnostic form.}
+\item{sequencing_form}{A tibble ready for REDCap import into the sequencing form.}
 }
 }
 \description{
-This function processes cleaned laboratory data and splits it into two REDCap-ready data frames:
-one for the \code{diagnostic} form and one for the \code{sequencing} form. It assigns REDCap metadata
-fields like \code{redcap_repeat_instrument}, \code{redcap_repeat_instance}, and \code{redcap_access_group}.
-It ensures all necessary fields exist based on the data dictionary and fills missing values with empty strings.
+Processes cleaned laboratory data and splits it into two REDCap-compatible data frames:
+one for the \code{diagnostic} form and another for the \code{sequencing} form. These are formatted
+for use with REDCap repeat instruments. The function uses a built-in REDCap dictionary
+by default, but you may provide a custom dictionary via the \code{dictPath} argument.
 }
 \details{
-This function internally calls \code{\link{get_redcap_form_columns}} to determine which variables belong to each form.
-It assigns \code{redcap_repeat_instance} from the \code{duplicate_id} column, and sets the repeat instrument name accordingly.
-Blank values are replaced with empty strings, as expected by REDCap for import.
+Uses \code{\link{get_redcap_form_columns}} to extract form-specific variables.
+Ensures REDCap repeat instrument fields (\code{redcap_repeat_instrument}, \code{redcap_repeat_instance})
+are properly set and all required fields are present. Missing fields are filled with \code{""}
+as required for REDCap imports.
+
+#' @examples
+\dontrun{
+# Assuming `cleaned_data` contains your processed lab records
+processed_df <- final_processing(mydata = cleaned_data, access_group = "nigeria")
+
+# Extract the two REDCap-ready forms
+diagnostic_form  <- processed_df$diagnostic_form
+sequencing_form  <- processed_df$sequencing_form
+
+# Write to CSV for REDCap import (ensure row.names = FALSE)
+write.csv(diagnostic_form, "diagnostic_form.csv", row.names = FALSE)
+write.csv(sequencing_form, "sequencing_form.csv", row.names = FALSE)
+
+# You can now upload these files via the REDCap data import tool
+}
 }

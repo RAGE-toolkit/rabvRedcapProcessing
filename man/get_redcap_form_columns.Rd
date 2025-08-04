@@ -4,21 +4,24 @@
 \alias{get_redcap_form_columns}
 \title{Extract REDCap Form Column Names from Data Dictionary}
 \usage{
-get_redcap_form_columns(dictPath)
+get_redcap_form_columns(
+  dictPath = system.file("extdata", "RABVlab_DataDictionary_redcap2025-08-04.csv",
+    package = "rabvRedcapProcessing")
+)
 }
 \arguments{
-\item{dictPath}{A file path to the REDCap data dictionary (CSV format).}
+\item{dictPath}{Path to the REDCap data dictionary (CSV file). Defaults to an internal dictionary bundled with the package.}
 }
 \value{
 A named list with three elements:
 \describe{
-\item{diagnostic_columns}{A character vector of variable names for the diagnostic form.}
-\item{sequencing_columns}{A character vector of variable names for the sequencing form. Includes \code{sample_id}, \code{redcap_repeat_instrument}, and \code{redcap_repeat_instance}.}
-\item{all_dict_cols}{A character vector of all variables in the dictionary, including REDCap metadata columns.}
+\item{diagnostic_columns}{Character vector of variable names for the diagnostic form.}
+\item{sequencing_columns}{Character vector of variable names for the sequencing form, including REDCap repeat metadata.}
+\item{all_dict_cols}{Character vector of all variables defined in the dictionary, including REDCap metadata columns.}
 }
 }
 \description{
-Parses a REDCap data dictionary CSV file to identify which variables belong to the
-diagnostic and sequencing forms. This helps define the expected structure for export
-into REDCap repeat instruments.
+Parses a REDCap data dictionary (CSV format) to identify which variables belong to the
+\code{diagnostic} and \code{sequencing} REDCap forms. This supports preparation of REDCap repeat
+instruments for data upload. A default dictionary bundled with the package is used unless a custom path is provided.
 }

@@ -4,20 +4,21 @@
 #' Returns (invisibly) any values that are not found in the dictionary and prints a message for review.
 #'
 #' @param dayta A data frame or tibble containing the dataset to be checked.
-#' @param dicts A named list of dictionaries created from the REDCap dictionary (e.g., using `read_and_parse_dict()`),
+#' @param dicts A named list of dictionaries created from the REDCap dictionary (typically from `read_and_parse_dict()`),
 #'              where each element corresponds to a coded field and maps value labels to codes.
 #' @param col_to_check A string indicating the column name in `dayta` to check against the dictionary.
 #'
 #' @return Invisibly returns a character vector of values not listed in the dictionary for that column.
-#'         Also prints messages to console for user feedback.
+#'         Also prints messages to console for user feedback. Note; It is the users responsibility to 
+#'         make sure that ALL values in coded columns match the dictionary before uploading to redcap.
 #'
-#' @details This function is helpful for validating categorical variables with predefined coding (e.g., gender, yes/no),
-#' ensuring that all observed values match expected dictionary labels. It optionally notifies the user of fallback
+#' @details This function is helpful for validating categorical variables with predefined coding,
+#' ensuring that all observed values match expected dictionary labels. It also notifies the user of fallback
 #' categories like "Other" or "Unknown" if present in the dictionary.
 #'
 #' @examples
 #' \dontrun{
-#' scan_mismatched_levels(my_data, myDicts, "sample_buffer")
+#' scan_mismatched_levels(my_data, dicts, "sample_buffer")
 #' }
 #'
 #' @importFrom glue glue
@@ -42,9 +43,12 @@ scan_mismatched_levels <- function(dayta, dicts, col_to_check) {
   if (length(not_in_dict) == 0) {
     message(glue::glue("✅ All values in '{col_to_check}' are valid and match the dictionary."))
   } else {
-    message(glue::glue("❌ The following values in '{col_to_check}' are not listed in the dictionary:\n - ",
-                       paste(not_in_dict, collapse = ", ")))
-
+    message(glue::glue(
+      "❌ The following values in '{col_to_check}' are not listed in the dictionary:\n - {paste(not_in_dict, collapse = ', ')}\n\n",
+      "⚠️ Please ensure these values match the expected choices in the dictionary before proceeding.\n",
+      "If they are valid, consider updating the data dictionary."
+    ))
+    
     # Check for fallback categories
     if (any(c("Unknown", "Other") %in% allowed_labels)) {
       fallback <- allowed_labels[allowed_labels %in% c("Unknown", "Other")]

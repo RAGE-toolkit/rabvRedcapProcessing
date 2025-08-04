@@ -24,7 +24,7 @@ read_data <- function(filepath) {
       ngs_rundate = as.Date(lubridate::parse_date_time(
         ngs_rundate,
         orders = c("d-b-y", "dmy", "ymd", "dmy", "dmY", "Ymd", "Y-m-d", "d/m/Y", "d-m-Y")
-        ))# %>% as.Date(.)
+        ))
       ) %>%
     dplyr::ungroup()
   

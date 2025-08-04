@@ -9,27 +9,28 @@ scan_mismatched_levels(dayta, dicts, col_to_check)
 \arguments{
 \item{dayta}{A data frame or tibble containing the dataset to be checked.}
 
-\item{dicts}{A named list of dictionaries created from the REDCap dictionary (e.g., using \code{read_and_parse_dict()}),
+\item{dicts}{A named list of dictionaries created from the REDCap dictionary (typically from \code{read_and_parse_dict()}),
 where each element corresponds to a coded field and maps value labels to codes.}
 
 \item{col_to_check}{A string indicating the column name in \code{dayta} to check against the dictionary.}
 }
 \value{
 Invisibly returns a character vector of values not listed in the dictionary for that column.
-Also prints messages to console for user feedback.
+Also prints messages to console for user feedback. Note; It is the users responsibility to
+make sure that ALL values in coded columns match the dictionary before uploading to redcap.
 }
 \description{
 Checks whether all values in a specified column of your dataset are present in the REDCap dictionary definitions.
 Returns (invisibly) any values that are not found in the dictionary and prints a message for review.
 }
 \details{
-This function is helpful for validating categorical variables with predefined coding (e.g., gender, yes/no),
-ensuring that all observed values match expected dictionary labels. It optionally notifies the user of fallback
+This function is helpful for validating categorical variables with predefined coding,
+ensuring that all observed values match expected dictionary labels. It also notifies the user of fallback
 categories like "Other" or "Unknown" if present in the dictionary.
 }
 \examples{
 \dontrun{
-scan_mismatched_levels(my_data, myDicts, "sample_buffer")
+scan_mismatched_levels(my_data, dicts, "sample_buffer")
 }
 
 }
