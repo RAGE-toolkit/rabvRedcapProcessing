@@ -37,4 +37,20 @@ Uses \code{\link{get_redcap_form_columns}} to extract form-specific variables.
 Ensures REDCap repeat instrument fields (\code{redcap_repeat_instrument}, \code{redcap_repeat_instance})
 are properly set and all required fields are present. Missing fields are filled with \code{""}
 as required for REDCap imports.
+
+#' @examples
+\dontrun{
+# Assuming `cleaned_data` contains your processed lab records
+processed_df <- final_processing(mydata = cleaned_data, access_group = "nigeria")
+
+# Extract the two REDCap-ready forms
+diagnostic_form  <- processed_df$diagnostic_form
+sequencing_form  <- processed_df$sequencing_form
+
+# Write to CSV for REDCap import (ensure row.names = FALSE)
+write.csv(diagnostic_form, "diagnostic_form.csv", row.names = FALSE)
+write.csv(sequencing_form, "sequencing_form.csv", row.names = FALSE)
+
+# You can now upload these files via the REDCap data import tool
+}
 }

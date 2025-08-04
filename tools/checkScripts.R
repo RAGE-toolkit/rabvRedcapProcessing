@@ -2,7 +2,7 @@
 
 rm(list = ls())
 
-remove.packages(c("ggplot2", "dplyr", "tidyr", "readr", 
+remove.packages(c("dplyr", "tidyr", "readr", 
                   "purrr", "tibble", "stringr", "rabvRedcapProcessing"))
 
 

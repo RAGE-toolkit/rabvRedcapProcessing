@@ -34,7 +34,11 @@ dicts <- read_and_parse_dict()
 # Or specify a custom dictionary path
 dicts <- read_and_parse_dict("path/to/my_dictionary.csv")
 
-dicts[["sample_buffer"]]
-# > Glycerol-saline = Glycerol-saline
-# > RNAshield = RNAshield
+# View all coded values
+names(dicts)
+
+# Glance at a specific mini-dict
+dicts[["fat"]]
+# > Positive = "Positive"
+# > Negative = "Negative"
 }
