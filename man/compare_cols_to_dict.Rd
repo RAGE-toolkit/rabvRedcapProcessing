@@ -32,10 +32,12 @@ Useful for validating and aligning datasets with a REDCap project structure befo
 recoding, or further processing.
 }
 \examples{
+
 # Use the default dictionary bundled with the package
+\dontrun{
 updated_data <- compare_cols_to_dict(my_data)
 
 # Or use a custom REDCap dictionary
 updated_data <- compare_cols_to_dict(my_data, "custom_dictionary.csv")
-
+}
 }

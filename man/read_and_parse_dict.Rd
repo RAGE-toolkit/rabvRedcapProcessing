@@ -5,13 +5,16 @@
 \title{Read and Parse REDCap Data Dictionary}
 \usage{
 read_and_parse_dict(
-  dictPath = system.file("extdata", "RABVlab_DataDictionary_redcap2025-08-04.csv",
-    package = "rabvRedcapProcessing")
+  dictUrl =
+    "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
+  fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package =
+    "rabvRedcapProcessing")
 )
 }
 \arguments{
-\item{dictPath}{Path to the REDCap data dictionary CSV file. If not specified, a default
-dictionary included in the package will be used.}
+\item{dictUrl}{A URL to the data dictionary CSV file. Defaults to GitHub raw link.}
+
+\item{fallbackPath}{Local fallback path, \code{system.file()}.}
 }
 \value{
 A named list of named vectors, where each list element corresponds to a field name,
@@ -21,24 +24,14 @@ and each named vector maps value codes to human-readable labels.
 Reads a REDCap data dictionary (CSV format) and parses the "Choices" column
 to create a named list of value-label pairs for use in data recoding. By default,
 it loads an internal dictionary included with the package, but users can specify
-a different dictionary file via the \code{dictPath} argument.
+a different dictionary file via the \code{dictUrl} argument.
 }
 \details{
 Special handling is provided for the "country" field, allowing both country names
 and codes to be valid inputs by building a dual-mapped dictionary.
 }
 \examples{
-# Use the default dictionary included with the package
 dicts <- read_and_parse_dict()
-
-# Or specify a custom dictionary path
-dicts <- read_and_parse_dict("path/to/my_dictionary.csv")
-
-# View all coded values
 names(dicts)
-
-# Glance at a specific mini-dict
 dicts[["fat"]]
-# > Positive = "Positive"
-# > Negative = "Negative"
 }

@@ -20,5 +20,7 @@ This function reads a CSV file and performs basic preprocessing:
 }
 }
 \examples{
+\dontrun{
 lab_data <- read_data("data/my_lab_records.csv")
+}
 }

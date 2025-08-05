@@ -14,7 +14,9 @@
 #' @importFrom magrittr %>%
 #'
 #' @examples
+#' \dontrun{
 #' lab_data <- read_data("data/my_lab_records.csv")
+#' }
 read_data <- function(filepath) {
   # Load and preprocess
   dayta <- read.csv(filepath, stringsAsFactors = FALSE) %>%

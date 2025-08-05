@@ -18,12 +18,14 @@
 #' recoding, or further processing.
 #'
 #' @examples
+#'
 #' # Use the default dictionary bundled with the package
+#' \dontrun{
 #' updated_data <- compare_cols_to_dict(my_data)
 #'
 #' # Or use a custom REDCap dictionary
 #' updated_data <- compare_cols_to_dict(my_data, "custom_dictionary.csv")
-#'
+#'}
 #' @export
 compare_cols_to_dict <- function(dayta, dictPath = system.file("extdata", 
                                                                "RABVlab_DataDictionary_redcap2025-08-04.csv", 
