@@ -8,8 +8,8 @@
 #' Special handling is provided for the "country" field, allowing both country names
 #' and codes to be valid inputs by building a dual-mapped dictionary.
 #'
-#' @param dictPath Path to the REDCap data dictionary CSV file. If not specified, a default
-#' dictionary included in the package will be used.
+#' @param dictUrl A URL to the data dictionary CSV file. Defaults to GitHub raw link.
+#' @param fallbackPath Local fallback path, \code{system.file()}.
 #'
 #' @return A named list of named vectors, where each list element corresponds to a field name,
 #' and each named vector maps value codes to human-readable labels.
@@ -41,6 +41,7 @@ read_and_parse_dict <- function(
     dictUrl = "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
     fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package = "rabvRedcapProcessing")
 ) {
+  # Try to read from GitHub or fall back to the local file
   tryCatch({
     read.csv(dictUrl, stringsAsFactors = FALSE)
   }, error = function(e) {
