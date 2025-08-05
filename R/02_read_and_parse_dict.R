@@ -36,10 +36,19 @@
 #' dicts[["fat"]]
 #' # > Positive = "Positive"
 #' # > Negative = "Negative"
-read_and_parse_dict <- function(dictPath = system.file("extdata", 
-                                                       "RABVlab_DataDictionary_redcap2025-08-04.csv", 
-                                                       package = "rabvRedcapProcessing")) {
-  data_dict <- read.csv(dictPath, stringsAsFactors = FALSE)
+
+read_and_parse_dict <- function(
+    dictUrl = "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
+    fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package = "rabvRedcapProcessing")
+) {
+  tryCatch({
+    read.csv(dictUrl, stringsAsFactors = FALSE)
+  }, error = function(e) {
+    warning("Failed to download from GitHub, using fallback system file.")
+    read.csv(fallbackPath, stringsAsFactors = FALSE)
+  })
+}
+
 
   # Helper to parse single string of "code, label | code, label"
   parse_dict <- function(choice_str) {
