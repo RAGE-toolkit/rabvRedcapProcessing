@@ -1,14 +1,17 @@
 #' Compare REDCap Data Columns to Data Dictionary
 #'
 #' Compares the column names of a dataset against the variable names
-#' specified in a REDCap data dictionary. By default, it uses a bundled dictionary
-#' included with the package, but users can specify a custom dictionary path via the `dictPath` argument.
+#' specified in a REDCap data dictionary. By default,
+#' it loads an online dictionary in the RAGE redcap repository, or as a fallback, 
+#' an internal dictionary included with the package, but users can specify
+#' a different dictionary file via the `dictUrl` argument.
 #'
 #' Any columns found in the dictionary but missing from the dataset will be added as blank (`NA`) columns.
 #' The function also reports any mismatches between the dataset and the dictionary.
 #'
 #' @param dayta A data frame or tibble representing your dataset (e.g., from REDCap export).
-#' @param dictPath Path to the REDCap data dictionary (CSV format). Defaults to an internal file included in the package.
+#' @param dictUrl A URL to the data dictionary CSV file. Defaults to GitHub raw link.
+#' @param fallbackPath Local fallback path, \code{system.file()}.
 #'
 #' @return A data frame that includes all columns defined in the dictionary.
 #' Any missing columns originally absent from the dataset will be added with `NA` values.
@@ -27,11 +30,15 @@
 #' updated_data <- compare_cols_to_dict(my_data, "custom_dictionary.csv")
 #'}
 #' @export
-compare_cols_to_dict <- function(dayta, dictPath = system.file("extdata", 
-                                                               "RABVlab_DataDictionary_redcap2025-08-04.csv", 
-                                                               package = "rabvRedcapProcessing")) {
-  # Load dictionary
-  data_dict <- read.csv(dictPath, stringsAsFactors = FALSE)
+compare_cols_to_dict <- function(dayta, dictUrl = "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
+                                 fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package = "rabvRedcapProcessing")) {
+  # Try to read from GitHub or fall back to the local file
+  data_dict <- tryCatch({
+    read.csv(dictUrl, stringsAsFactors = FALSE)
+  }, error = function(e) {
+    warning("Failed to download from GitHub, using fallback system file.")
+    read.csv(fallbackPath, stringsAsFactors = FALSE)
+  })
   
   # Extract column names
   file_cols <- names(dayta)

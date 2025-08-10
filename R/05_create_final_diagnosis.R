@@ -61,7 +61,7 @@ create_diagnostic_result_rule <- function(df) {
   fat_test  <- get_column("fat")
   drit_test <- get_column("drit")
   
-  purrr::pmap_chr(
+  df$diagnostic_result <- purrr::pmap_chr(
     list(lft, rt, hmp, fat_test, drit_test),
     function(lft, rt, hmp, fat, drit) {
       all_tests <- c(lft, rt, hmp, fat, drit)
@@ -93,4 +93,5 @@ create_diagnostic_result_rule <- function(df) {
       NA_character_
     }
   )
+  return(df)
 }

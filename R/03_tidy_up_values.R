@@ -62,6 +62,7 @@ tidy_up_values <- function(df) {
         TRUE ~ hmpcr_n405
       ),
       
+      # redcap doesnt like these symbols
       sample_id = sample_id %>%
         str_replace_all("[&+]", "_")
     )

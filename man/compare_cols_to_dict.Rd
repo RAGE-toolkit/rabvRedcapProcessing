@@ -6,14 +6,18 @@
 \usage{
 compare_cols_to_dict(
   dayta,
-  dictPath = system.file("extdata", "RABVlab_DataDictionary_redcap2025-08-04.csv",
-    package = "rabvRedcapProcessing")
+  dictUrl =
+    "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
+  fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package =
+    "rabvRedcapProcessing")
 )
 }
 \arguments{
 \item{dayta}{A data frame or tibble representing your dataset (e.g., from REDCap export).}
 
-\item{dictPath}{Path to the REDCap data dictionary (CSV format). Defaults to an internal file included in the package.}
+\item{dictUrl}{A URL to the data dictionary CSV file. Defaults to GitHub raw link.}
+
+\item{fallbackPath}{Local fallback path, \code{system.file()}.}
 }
 \value{
 A data frame that includes all columns defined in the dictionary.
@@ -21,8 +25,10 @@ Any missing columns originally absent from the dataset will be added with \code{
 }
 \description{
 Compares the column names of a dataset against the variable names
-specified in a REDCap data dictionary. By default, it uses a bundled dictionary
-included with the package, but users can specify a custom dictionary path via the \code{dictPath} argument.
+specified in a REDCap data dictionary. By default,
+it loads an online dictionary in the RAGE redcap repository, or as a fallback,
+an internal dictionary included with the package, but users can specify
+a different dictionary file via the \code{dictUrl} argument.
 }
 \details{
 Any columns found in the dictionary but missing from the dataset will be added as blank (\code{NA}) columns.

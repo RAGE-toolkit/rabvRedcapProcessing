@@ -10,7 +10,9 @@ get_redcap_form_columns(
 )
 }
 \arguments{
-\item{dictPath}{Path to the REDCap data dictionary (CSV file). Defaults to an internal dictionary bundled with the package.}
+\item{dictUrl}{A URL to the data dictionary CSV file. Defaults to GitHub raw link.}
+
+\item{fallbackPath}{Local fallback path, \code{system.file()}.}
 }
 \value{
 A named list with three elements:

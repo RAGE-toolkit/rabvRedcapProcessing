@@ -2,7 +2,8 @@
 #'
 #' Reads a REDCap data dictionary (CSV format) and parses the "Choices" column
 #' to create a named list of value-label pairs for use in data recoding. By default,
-#' it loads an internal dictionary included with the package, but users can specify
+#' it loads an online dictionary in the RAGE redcap repository, or as a fallback, 
+#' an internal dictionary included with the package, but users can specify
 #' a different dictionary file via the `dictUrl` argument.
 #'
 #' Special handling is provided for the "country" field, allowing both country names
@@ -62,16 +63,22 @@ read_and_parse_dict <- function(
   
   # Define country dictionary
   country_dict  <- dicts[["country"]]
+  
+  # process this further to take either country full name or short
+  # parse out codes and names
   entries <- names(country_dict)
   values  <- unname(country_dict)
   parts   <- strsplit(values, ":\\s*")
   codes   <- sapply(parts, `[`, 1)
   names_  <- sapply(parts, `[`, 2)
   
-  # Build a lookup that maps both code→value and name→value
+  
+  # build a lookup that maps both code→value and name→value
   country_dict <- c(
+    setNames(codes, entries),
     setNames(names_, entries)
   )
+  
   
   dicts[["country"]] <- country_dict
   

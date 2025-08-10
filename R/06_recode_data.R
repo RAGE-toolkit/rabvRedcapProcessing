@@ -49,8 +49,11 @@ recode_data <- function(dicts, dayta) {
     original_vals <- as.character(dayta[[col]])
     matched_vals <- label_to_code[original_vals]
     
-    # Identify unmatched values
+    # Unmatched (including blanks)
     unmatched_all <- unique(original_vals[is.na(matched_vals)])
+    unmatched_idx <- is.na(matched_vals)
+    blanks        <- unmatched_all[unmatched_all == "" | is.na(unmatched_all)]
+    non_blanks    <- unmatched_all[!(unmatched_all == "" | is.na(unmatched_all))]
     
     # Split unmatched into blanks and real mismatches
     blanks <- unmatched_all[unmatched_all == "" | is.na(unmatched_all)]
@@ -59,7 +62,7 @@ recode_data <- function(dicts, dayta) {
     if (length(unmatched_all) > 0) {
       if (!warned) {
         message("⚠️ Some values could not be matched to dictionary codes.")
-        message("→ Please review and replace these in your data to match allowed dictionary values.")
+        message("→ Please review these carefully:")
         warned <- TRUE
       }
       
@@ -71,9 +74,35 @@ recode_data <- function(dicts, dayta) {
       }
     }
     
-    recoded_data[[col]] <- matched_vals
+    # --- Per-column fallback handling ---------------------------------------
+    allowed_labels <- unname(dict)  # the label set for this column
+    fallback_candidates <- c("Unknown", "Other", "NA")
+    present_fallbacks <- intersect(fallback_candidates, allowed_labels)
+    
+    
+    if (length(present_fallbacks) > 0) {
+      # Use first in preference order (Unknown > Other > NA)
+      fallback_label <- present_fallbacks[1]
+      # Get its code from this column's dict
+      fallback_code <- names(dict)[match(fallback_label, dict)]
+      
+      # Replace any NA (i.e., unmatched) with the fallback code
+      n_replaced <- sum(is.na(matched_vals))
+      if (n_replaced > 0) {
+        matched_vals[is.na(matched_vals)] <- fallback_code
+        message(glue::glue("ℹ️ `{col}`: {n_replaced} unmatched value(s) set to fallback '{fallback_label}' (code = {fallback_code})."))
+      }
+    } else {
+      # No fallback available for this column; leave NAs as-is
+      if (any(is.na(matched_vals))) {
+        message(glue::glue("ℹ️ `{col}` has no fallback label ('Unknown'/'Other'/'NA') in its dictionary; leaving {sum(is.na(matched_vals))} unmatched value(s) as NA."))
+      }
+    }
+    # ------------------------------------------------------------------------
+    
+    recoded_data[[col]] <- unname(matched_vals)
   }
-  
+ 
   return(recoded_data)
 }
 

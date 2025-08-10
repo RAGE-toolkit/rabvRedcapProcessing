@@ -50,8 +50,8 @@ scan_mismatched_levels <- function(dayta, dicts, col_to_check) {
     ))
     
     # Check for fallback categories
-    if (any(c("Unknown", "Other") %in% allowed_labels)) {
-      fallback <- allowed_labels[allowed_labels %in% c("Unknown", "Other")]
+    if (any(c("Unknown", "Other", "NA") %in% allowed_labels)) {
+      fallback <- allowed_labels[allowed_labels %in% c("Unknown", "Other", "NA")]
       message(glue::glue("ℹ️ These values will be classed as: {paste(fallback, collapse = ' or ')}"))
     }
   }

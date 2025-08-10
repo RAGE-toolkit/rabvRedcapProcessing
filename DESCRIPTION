@@ -1,6 +1,6 @@
 Package: rabvRedcapProcessing
 Title: Tools for Processing Rabies Lab Data for REDCap Upload
-Version: 0.1.1.4
+Version: 0.1.1.5
 Date: 2025-08-04
 Authors@R: c(
     person("Martha", "Luka", email = "m.luka.1@research.gla.ac.uk",
