@@ -4,8 +4,9 @@
 #' `diagnostic` and `sequencing` REDCap forms. This supports preparation of REDCap repeat
 #' instruments for data upload. A default dictionary bundled with the package is used unless a custom path is provided.
 #'
-#' @param dictPath Path to the REDCap data dictionary (CSV file). Defaults to an internal dictionary bundled with the package.
-#'
+#' @param dictUrl A URL to the data dictionary CSV file. Defaults to GitHub raw link.
+#' @param fallbackPath Local fallback path, \code{system.file()}.
+#' 
 #' @return A named list with three elements:
 #' \describe{
 #'   \item{diagnostic_columns}{Character vector of variable names for the diagnostic form.}
@@ -43,11 +44,13 @@ get_redcap_form_columns <- function(dictPath = system.file("extdata",
 #'
 #' Processes cleaned laboratory data and splits it into two REDCap-compatible data frames:
 #' one for the `diagnostic` form and another for the `sequencing` form. These are formatted
-#' for use with REDCap repeat instruments. The function uses a built-in REDCap dictionary
-#' by default, but you may provide a custom dictionary via the `dictPath` argument.
+#' for use with REDCap repeat instruments. By default, it loads an online dictionary in 
+#' the RAGE redcap repository, or as a fallback, an internal dictionary included with the package, 
+#' but users can specify a different dictionary file via the `dictUrl` argument.
 #'
 #' @param mydata A data frame containing cleaned lab records. Must include a `sample_id` and `duplicate_id` column.
-#' @param dictPath File path to the REDCap data dictionary (CSV format). Defaults to a dictionary bundled with the package.
+#' @param dictUrl A URL to the data dictionary CSV file. Defaults to GitHub raw link.
+#' @param fallbackPath Local fallback path, \code{system.file()}.
 #' @param access_group A character string specifying the REDCap Data Access Group. Must be one of:
 #' `"east_africa"`, `"malawi"`, `"nigeria"`, `"peru"`, or `"philippines"`.
 #'

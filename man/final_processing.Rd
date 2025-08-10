@@ -14,10 +14,12 @@ final_processing(
 \arguments{
 \item{mydata}{A data frame containing cleaned lab records. Must include a \code{sample_id} and \code{duplicate_id} column.}
 
-\item{dictPath}{File path to the REDCap data dictionary (CSV format). Defaults to a dictionary bundled with the package.}
-
 \item{access_group}{A character string specifying the REDCap Data Access Group. Must be one of:
 \code{"east_africa"}, \code{"malawi"}, \code{"nigeria"}, \code{"peru"}, or \code{"philippines"}.}
+
+\item{dictUrl}{A URL to the data dictionary CSV file. Defaults to GitHub raw link.}
+
+\item{fallbackPath}{Local fallback path, \code{system.file()}.}
 }
 \value{
 A named list with two tibbles:
@@ -29,8 +31,9 @@ A named list with two tibbles:
 \description{
 Processes cleaned laboratory data and splits it into two REDCap-compatible data frames:
 one for the \code{diagnostic} form and another for the \code{sequencing} form. These are formatted
-for use with REDCap repeat instruments. The function uses a built-in REDCap dictionary
-by default, but you may provide a custom dictionary via the \code{dictPath} argument.
+for use with REDCap repeat instruments. By default, it loads an online dictionary in
+the RAGE redcap repository, or as a fallback, an internal dictionary included with the package,
+but users can specify a different dictionary file via the \code{dictUrl} argument.
 }
 \details{
 Uses \code{\link{get_redcap_form_columns}} to extract form-specific variables.

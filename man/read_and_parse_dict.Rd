@@ -23,7 +23,8 @@ and each named vector maps value codes to human-readable labels.
 \description{
 Reads a REDCap data dictionary (CSV format) and parses the "Choices" column
 to create a named list of value-label pairs for use in data recoding. By default,
-it loads an internal dictionary included with the package, but users can specify
+it loads an online dictionary in the RAGE redcap repository, or as a fallback,
+an internal dictionary included with the package, but users can specify
 a different dictionary file via the \code{dictUrl} argument.
 }
 \details{

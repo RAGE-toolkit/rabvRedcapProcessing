@@ -20,15 +20,24 @@
 read_data <- function(filepath) {
   # Load and preprocess
   dayta <- read.csv(filepath, stringsAsFactors = FALSE) %>%
-    dplyr::group_by(sample_id) %>%
     dplyr::mutate(
-      duplicate_id = dplyr::row_number(),
       ngs_rundate = as.Date(lubridate::parse_date_time(
         ngs_rundate,
-        orders = c("d-b-y", "dmy", "ymd", "dmy", "dmY", "Ymd", "Y-m-d", "d/m/Y", "d-m-Y")
-        ))
-      ) %>%
-    dplyr::ungroup()
+        orders = c("d-b-y", "dmy", "ymd", "dmY", "Ymd", "Y-m-d", "d/m/Y", "d-m-Y")
+      )),
+      .row_id = dplyr::row_number()  # keep original row order for tie-breaking
+    ) %>%
+    dplyr::group_by(sample_id) %>%
+    dplyr::arrange(
+      # order within sample_id: valid dates first, then NA dates
+      dplyr::coalesce(ngs_rundate, as.Date("9999-12-31")),
+      .row_id,                         # stable tie-breaker
+      .by_group = TRUE
+    ) %>%
+    dplyr::mutate(duplicate_id = dplyr::row_number()) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(-.row_id)
+  
   
   # Console feedback
   message("✅ Your data contains ", nrow(dayta), " entries.")
