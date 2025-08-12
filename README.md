@@ -37,16 +37,16 @@ The typical workflow is illustrated below:
 
 ![Workflow diagram](inst/figures/workflow.png)
 
-| Function                   | Description                                              | Input            | Output                               |
-|----------------------------|----------------------------------------------------------|------------------|--------------------------------------|
-| `read_data()`              | Load and summarize input metadata                        | csv filePath     | Data frame + duplicates report       |
-| `read_and_parse_dict()`    | Load REDCap dictionary and extract coded lists           | optional dictPath| List of mini dictionaries     |
-| `compare_cols_to_dict()`   | Check for missing or extra columns vs REDCap dictionary  | Data + optionaldictPath| Harmonized data frame  |
-| `scan_mismatched_levels()` | Scan for values that don't match allowed dictionary codes| Data + col_to_check + dicts | Warnings to inform your manual processing (if necessary) |
-| `tidy_up_values()`         | Fix common value mismatches (e.g., typos, synonyms)      | Data             | Cleaned data                   |
-| `create_final_diagnosis()` | Derive final diagnostic result from test columns         | Data             | updated `diagnostic_result`(df)|
-| `recode_data()`            | Recode labels to dictionary codes                        | Data + dicts     | Recoded data frame             |
-| `final_processing()`       | Final formatting & generation of REDCap-ready forms      | Data + optionaldictPath +  access_group | Diagnostic + Sequencing forms  |
+| Function                      | Description                                              | Input            | Output                               |
+|-------------------------------|----------------------------------------------------------|------------------|--------------------------------------|
+| `read_data()`                 | Load and summarize input metadata                        | csv filePath     | Data frame + duplicates report       |
+| `read_and_parse_dict()`       | Load REDCap dictionary and extract coded lists           | optional dictPath| List of mini dictionaries     |
+| `compare_cols_to_dict()`      | Check for missing or extra columns vs REDCap dictionary  | Data + optionaldictPath| Harmonized data frame  |
+| `scan_mismatched_levels()`    | Scan for values that don't match allowed dictionary codes| Data + col_to_check + dicts | Warnings to inform your manual processing (if necessary) |
+| `tidy_up_values()`            | Fix common value mismatches (e.g., typos, synonyms)      | Data             | Cleaned data                   |
+| `create_diagnostic_result_rule()` | Derive final diagnostic result from test columns     | Data             | updated `diagnostic_result`(df)|
+| `recode_data()`               | Recode labels to dictionary codes                        | Data + dicts     | Recoded data frame             |
+| `final_processing()`          | Final formatting & generation of REDCap-ready forms      | Data + optionaldictPath +  access_group | Diagnostic + Sequencing forms  |
 
 ---
 

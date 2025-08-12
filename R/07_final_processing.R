@@ -18,9 +18,10 @@
 #' @importFrom magrittr %>%
 #'
 #' @export
-get_redcap_form_columns <- function(dictPath = system.file("extdata", 
-                                                           "RABVlab_DataDictionary_redcap2025-08-04.csv", 
-                                                           package = "rabvRedcapProcessing")) {
+get_redcap_form_columns <- function(
+  dictUrl = "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
+  fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package = "rabvRedcapProcessing")
+  ) {
   data_dict <- read.csv(dictPath, stringsAsFactors = FALSE)
   
   list(
