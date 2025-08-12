@@ -5,8 +5,10 @@
 \title{Extract REDCap Form Column Names from Data Dictionary}
 \usage{
 get_redcap_form_columns(
-  dictPath = system.file("extdata", "RABVlab_DataDictionary_redcap2025-08-04.csv",
-    package = "rabvRedcapProcessing")
+  dictUrl =
+    "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
+  fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package =
+    "rabvRedcapProcessing")
 )
 }
 \arguments{
