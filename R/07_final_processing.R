@@ -88,14 +88,13 @@ get_redcap_form_columns <- function(
 #' @importFrom tidyr replace_na
 #'
 #' @export
-final_processing <- function(mydata, dictPath = system.file("extdata", 
-                                                            "RABVlab_DataDictionary_redcap2025-08-04.csv", 
-                                                            package = "rabvRedcapProcessing"),
+final_processing <- function(mydata,  dictUrl = "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
+                             fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package = "rabvRedcapProcessing"),
                              access_group = c("east_africa", "malawi", "nigeria", "peru", "philippines")) {
   # QC check that correct access group is given
   access_group <- match.arg(access_group)
   
-  form_cols <- get_redcap_form_columns(dictPath)
+  form_cols <- get_redcap_form_columns(dictUrl = dictUrl, fallbackPath = fallbackPath)
   diagnostic_columns <- form_cols$diagnostic_columns
   sequencing_columns <- form_cols$sequencing_columns
   all_dict_cols <- form_cols$all_dict_cols
