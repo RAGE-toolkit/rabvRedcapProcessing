@@ -6,20 +6,22 @@
 \usage{
 final_processing(
   mydata,
-  dictPath = system.file("extdata", "RABVlab_DataDictionary_redcap2025-08-04.csv",
-    package = "rabvRedcapProcessing"),
+  dictUrl =
+    "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
+  fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package =
+    "rabvRedcapProcessing"),
   access_group = c("east_africa", "malawi", "nigeria", "peru", "philippines")
 )
 }
 \arguments{
 \item{mydata}{A data frame containing cleaned lab records. Must include a \code{sample_id} and \code{duplicate_id} column.}
 
-\item{access_group}{A character string specifying the REDCap Data Access Group. Must be one of:
-\code{"east_africa"}, \code{"malawi"}, \code{"nigeria"}, \code{"peru"}, or \code{"philippines"}.}
-
 \item{dictUrl}{A URL to the data dictionary CSV file. Defaults to GitHub raw link.}
 
 \item{fallbackPath}{Local fallback path, \code{system.file()}.}
+
+\item{access_group}{A character string specifying the REDCap Data Access Group. Must be one of:
+\code{"east_africa"}, \code{"malawi"}, \code{"nigeria"}, \code{"peru"}, or \code{"philippines"}.}
 }
 \value{
 A named list with two tibbles:
