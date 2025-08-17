@@ -6,7 +6,7 @@
 # Install package
   # if not already installed
   # install.packages("devtools") 
-devtools::install_github("RAGE-toolkit/rabvRedcapProcessing")
+devtools::install_github("RAGE-toolkit/rabvRedcapProcessing", force = TRUE)
 library(rabvRedcapProcessing)
 
 library(dplyr) # in addition, we also use dplyr to manipulate data in this script
@@ -64,8 +64,7 @@ recoded_data <- recode_data(dicts = myDicts, dayta = updated_data2)
 
 
 # final process ##########
-out_data <- final_processing(mydata = recoded_data,
-                             access_group ="philippines")
+out_data <- final_processing(mydata = recoded_data)
 
 
 names(out_data)

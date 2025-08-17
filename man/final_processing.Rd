@@ -9,53 +9,45 @@ final_processing(
   dictUrl =
     "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
   fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package =
-    "rabvRedcapProcessing"),
-  access_group = c("east_africa", "malawi", "nigeria", "peru", "philippines")
+    "rabvRedcapProcessing")
 )
 }
 \arguments{
-\item{mydata}{A data frame containing cleaned lab records. Must include a \code{sample_id} and \code{duplicate_id} column.}
+\item{mydata}{A data frame with cleaned lab records. Must include \code{sample_id},
+\code{duplicate_id}, and \code{country}.}
 
-\item{dictUrl}{A URL to the data dictionary CSV file. Defaults to GitHub raw link.}
+\item{dictUrl}{A URL to the data dictionary CSV file (defaults to RAGE GitHub).}
 
-\item{fallbackPath}{Local fallback path, \code{system.file()}.}
-
-\item{access_group}{A character string specifying the REDCap Data Access Group. Must be one of:
-\code{"east_africa"}, \code{"malawi"}, \code{"nigeria"}, \code{"peru"}, or \code{"philippines"}.}
+\item{fallbackPath}{Local fallback path, typically via \code{system.file()}.}
 }
 \value{
-A named list with two tibbles:
+A named list with:
 \describe{
-\item{diagnostic_form}{A tibble ready for REDCap import into the diagnostic form.}
-\item{sequencing_form}{A tibble ready for REDCap import into the sequencing form.}
+\item{diagnostic_form}{Tibble ready for REDCap import into the diagnostic form.}
+\item{sequencing_form}{Tibble ready for REDCap import into the sequencing form.}
 }
 }
 \description{
-Processes cleaned laboratory data and splits it into two REDCap-compatible data frames:
-one for the \code{diagnostic} form and another for the \code{sequencing} form. These are formatted
-for use with REDCap repeat instruments. By default, it loads an online dictionary in
-the RAGE redcap repository, or as a fallback, an internal dictionary included with the package,
-but users can specify a different dictionary file via the \code{dictUrl} argument.
+Processes cleaned lab data into two REDCap-ready tibbles:
+\code{diagnostic_form} and \code{sequencing_form}. Access group is inferred
+per row from the \code{country} column via \code{\link{infer_access_group}}:
+Kenya/Uganda/Tanzania → "east_africa"; Malawi/Nigeria/Peru/Philippines map to
+themselves. Unrecognised countries get NA.
 }
 \details{
-Uses \code{\link{get_redcap_form_columns}} to extract form-specific variables.
-Ensures REDCap repeat instrument fields (\code{redcap_repeat_instrument}, \code{redcap_repeat_instance})
-are properly set and all required fields are present. Missing fields are filled with \code{""}
-as required for REDCap imports.
+By default, the function loads the project dictionary from the RAGE GitHub
+(raw CSV). If that URL is unavailable, it falls back to an internal CSV bundled
+with the package. You may also provide a custom dictionary URL or file path.
 
-#' @examples
-\dontrun{
-# Assuming `cleaned_data` contains your processed lab records
-processed_df <- final_processing(mydata = cleaned_data, access_group = "nigeria")
-
-# Extract the two REDCap-ready forms
-diagnostic_form  <- processed_df$diagnostic_form
-sequencing_form  <- processed_df$sequencing_form
-
-# Write to CSV for REDCap import (ensure row.names = FALSE)
-write.csv(diagnostic_form, "diagnostic_form.csv", row.names = FALSE)
-write.csv(sequencing_form, "sequencing_form.csv", row.names = FALSE)
-
-# You can now upload these files via the REDCap data import tool
+Uses \code{\link{get_redcap_form_columns}} to obtain expected field sets.
+Ensures repeat instrument fields are present and fills blanks with "" as
+expected by REDCap imports.
 }
+\examples{
+\dontrun{
+processed <- final_processing(mydata = cleaned_data)
+write.csv(processed$diagnostic_form, "diagnostic_form.csv", row.names = FALSE)
+write.csv(processed$sequencing_form, "sequencing_form.csv", row.names = FALSE)
+}
+
 }
