@@ -19,9 +19,9 @@
 #'
 #' @export
 get_redcap_form_columns <- function(
-  dictUrl = "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
-  fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package = "rabvRedcapProcessing")
-  ) {
+    dictUrl = "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
+    fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package = "rabvRedcapProcessing")
+) {
   
   # Try to read from GitHub or fall back to the local file
   data_dict <- tryCatch({
@@ -47,49 +47,6 @@ get_redcap_form_columns <- function(
   )
 }
 
-#' Infer REDCap Data Access Group from `country`
-#'
-#' Maps country names to REDCap Data Access Groups row-by-row.
-#' - Kenya, Uganda, Tanzania → "east_africa"
-#' - Malawi → "malawi"
-#' - Nigeria → "nigeria"
-#' - Peru → "peru"
-#' - Philippines → "philippines"
-#' Unrecognised or missing countries return NA (with a message listing examples).
-#'
-#' @param country Character vector of country names.
-#' @return Character vector of access groups.
-#'
-#' @examples
-#' infer_access_group(c("Kenya","uganda","PERU","Unknown"))
-#' # [1] "east_africa" "east_africa" "peru" NA
-#'
-#' @export
-infer_access_group <- function(country) {
-  country2 <- tolower(trimws(country))
-  
-  map <- c(
-    "kenya" = "east_africa",
-    "uganda" = "east_africa",
-    "tanzania" = "east_africa",
-    "united republic of tanzania" = "east_africa",
-    "malawi" = "malawi",
-    "nigeria" = "nigeria",
-    "peru" = "peru",
-    "philippines" = "philippines"
-  )
-  
-  out <- unname(map[country2])
-  
-  if (any(is.na(out))) {
-    unknowns <- unique(country[is.na(out)])
-    message("⚠️ Unrecognised `country`, access group set to NA. Examples: ",
-            paste(head(unknowns, 5), collapse = ", "),
-            if (length(unknowns) > 5) " …" else "")
-  }
-  
-  out
-}
 
 #' Harmonize platform-specific fields based on `ngs_platform`
 #'
@@ -101,7 +58,7 @@ infer_access_group <- function(country) {
 #' @export
 harmonize_platform_fields <- function(df) {
   if (!"ngs_platform" %in% names(df)) return(df)
-
+  
   df %>%
     dplyr::mutate(
       illumina_platform = dplyr::case_when(
@@ -119,17 +76,14 @@ harmonize_platform_fields <- function(df) {
 #' Prepare Diagnostic and Sequencing REDCap Forms
 #'
 #' Processes cleaned lab data into two REDCap-ready tibbles:
-#' `diagnostic_form` and `sequencing_form`. Access group is inferred
-#' per row from the `country` column via \code{\link{infer_access_group}}:
-#' Kenya/Uganda/Tanzania → "east_africa"; Malawi/Nigeria/Peru/Philippines map to
-#' themselves. Unrecognised countries get NA.
+#' `diagnostic_form` and `sequencing_form`. 
 #'
 #' By default, the function loads the project dictionary from the RAGE GitHub
 #' (raw CSV). If that URL is unavailable, it falls back to an internal CSV bundled
 #' with the package. You may also provide a custom dictionary URL or file path.
 #'
-#' @param mydata A data frame with cleaned lab records. Must include `sample_id`,
-#'   `duplicate_id`, and `country`.
+#' @param mydata A data frame with cleaned lab records. Must include `sample_id`
+#'   and `duplicate_id`.
 #' @param dictUrl A URL to the data dictionary CSV file (defaults to RAGE GitHub).
 #' @param fallbackPath Local fallback path, typically via \code{system.file()}.
 #'
@@ -154,18 +108,11 @@ harmonize_platform_fields <- function(df) {
 #' @importFrom dplyr mutate select any_of across
 #' @importFrom tidyr replace_na
 #' @export
-
 final_processing <- function(
     mydata,
     dictUrl = "https://raw.githubusercontent.com/RAGE-toolkit/rage-redcap/main/data_dictionaries/RAGEredcap_DataDictionary.csv",
     fallbackPath = system.file("extdata", "RABVlab_DataDictionary.csv", package = "rabvRedcapProcessing")
 ) {
-  # infer access group per row
-  if (!("country" %in% names(mydata))) {
-    stop("`mydata` must contain a `country` column to infer access group.")
-  }
-  mydata$redcap_data_access_group <- infer_access_group(mydata$country)
-  
   # harmonize_platform_fields
   mydata <- harmonize_platform_fields(mydata)
   
@@ -181,11 +128,11 @@ final_processing <- function(
       redcap_repeat_instance   = duplicate_id,
       redcap_repeat_instrument = ""
     ) %>%
-    dplyr::select(any_of(c("sample_id", "redcap_data_access_group", all_dict_cols)))
+    dplyr::select(any_of(c("sample_id", all_dict_cols)))
   
   # diagnostic
   diagnostic_form <- mydata %>%
-    dplyr::select(any_of(c("sample_id", "redcap_data_access_group", diagnostic_columns))) %>%
+    dplyr::select(any_of(c("sample_id", diagnostic_columns))) %>%
     dplyr::mutate(
       dplyr::across(dplyr::everything(), ~ tidyr::replace_na(as.character(.), ""))
     )
@@ -195,7 +142,7 @@ final_processing <- function(
     dplyr::mutate(
       redcap_repeat_instrument = "sequencing"
     ) %>%
-    dplyr::select(any_of(c("sample_id", "redcap_data_access_group", sequencing_columns))) %>%
+    dplyr::select(any_of(c("sample_id", sequencing_columns))) %>%
     dplyr::mutate(
       dplyr::across(dplyr::everything(), ~ tidyr::replace_na(as.character(.), ""))
     )
@@ -205,4 +152,3 @@ final_processing <- function(
     sequencing_form = sequencing_form
   )
 }
-
