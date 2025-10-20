@@ -9,7 +9,7 @@ Returns (invisibly) any values that are not found in the dictionary and prints a
 
     <a class="navbar-brand me-2" href="../index.html">rabvRedcapProcessing</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.18</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,7 @@ Returns (invisibly) any values that are not found in the dictionary and prints a
 
 
 <dt id="arg-dicts">dicts<a class="anchor" aria-label="anchor" href="#arg-dicts"></a></dt>
-<dd><p>A named list of dictionaries created from the REDCap dictionary (e.g., using <code><a href="read_and_parse_dict.html">read_and_parse_dict()</a></code>),
+<dd><p>A named list of dictionaries created from the REDCap dictionary (typically from <code><a href="read_and_parse_dict.html">read_and_parse_dict()</a></code>),
 where each element corresponds to a coded field and maps value labels to codes.</p></dd>
 
 
@@ -62,19 +62,20 @@ where each element corresponds to a coded field and maps value labels to codes.<
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Invisibly returns a character vector of values not listed in the dictionary for that column.
-Also prints messages to console for user feedback.</p>
+Also prints messages to console for user feedback. Note; It is the users responsibility to
+make sure that ALL values in coded columns match the dictionary before uploading to redcap.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function is helpful for validating categorical variables with predefined coding (e.g., gender, yes/no),
-ensuring that all observed values match expected dictionary labels. It optionally notifies the user of fallback
+    <p>This function is helpful for validating categorical variables with predefined coding,
+ensuring that all observed values match expected dictionary labels. It also notifies the user of fallback
 categories like "Other" or "Unknown" if present in the dictionary.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu">scan_mismatched_levels</span><span class="op">(</span><span class="va">my_data</span>, <span class="va">myDicts</span>, <span class="st">"sample_buffer"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">scan_mismatched_levels</span><span class="op">(</span><span class="va">my_data</span>, <span class="va">dicts</span>, <span class="st">"sample_buffer"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

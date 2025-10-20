@@ -55,6 +55,7 @@ get_redcap_form_columns <- function(
 #'
 #' @param df Data frame with ngs_platform + platform-specific cols
 #' @return Data frame with harmonized platform fields
+#' @keywords internal
 #' @export
 harmonize_platform_fields <- function(df) {
   if (!"ngs_platform" %in% names(df)) return(df)

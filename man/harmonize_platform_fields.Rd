@@ -16,3 +16,4 @@ Data frame with harmonized platform fields
 Nanopore → blank illumina_platform
 Illumina → blank nanopore_platform
 }
+\keyword{internal}
