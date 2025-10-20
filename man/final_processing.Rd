@@ -13,8 +13,8 @@ final_processing(
 )
 }
 \arguments{
-\item{mydata}{A data frame with cleaned lab records. Must include \code{sample_id},
-\code{duplicate_id}, and \code{country}.}
+\item{mydata}{A data frame with cleaned lab records. Must include \code{sample_id}
+and \code{duplicate_id}.}
 
 \item{dictUrl}{A URL to the data dictionary CSV file (defaults to RAGE GitHub).}
 
@@ -29,10 +29,7 @@ A named list with:
 }
 \description{
 Processes cleaned lab data into two REDCap-ready tibbles:
-\code{diagnostic_form} and \code{sequencing_form}. Access group is inferred
-per row from the \code{country} column via \code{\link{infer_access_group}}:
-Kenya/Uganda/Tanzania → "east_africa"; Malawi/Nigeria/Peru/Philippines map to
-themselves. Unrecognised countries get NA.
+\code{diagnostic_form} and \code{sequencing_form}.
 }
 \details{
 By default, the function loads the project dictionary from the RAGE GitHub
