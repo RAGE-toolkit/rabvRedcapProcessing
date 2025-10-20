@@ -11,7 +11,7 @@ when REDCap exports or manually curated data use labels, but the system requires
 
     <a class="navbar-brand me-2" href="../index.html">rabvRedcapProcessing</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.18</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,9 +88,11 @@ replaced by their corresponding REDCap codes where applicable.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">recoded</span> <span class="op">&lt;-</span> <span class="fu">recode_data</span><span class="op">(</span><span class="va">dicts</span>, <span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ⚠️ Some values could not be matched to dictionary codes.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Please review and replace these in your data to match allowed dictionary values.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Please review these carefully:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  - `fat`: Unknown</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ️ `fat` has no fallback label ('Unknown'/'Other'/'NA') in its dictionary; leaving 1 unmatched value(s) as NA.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  - `sample_buffer`: contains blanks</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ️ `sample_buffer` has no fallback label ('Unknown'/'Other'/'NA') in its dictionary; leaving 1 unmatched value(s) as NA.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">recoded</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   fat   sample_buffer</span>

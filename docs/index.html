@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">rabvRedcapProcessing</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.18</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,9 +84,9 @@
 <table class="table">
 <colgroup>
 <col width="21%">
-<col width="43%">
-<col width="10%">
-<col width="24%">
+<col width="40%">
+<col width="12%">
+<col width="26%">
 </colgroup>
 <thead><tr>
 <th>Function</th>
@@ -98,26 +98,26 @@
 <tr>
 <td><code><a href="reference/read_data.html">read_data()</a></code></td>
 <td>Load and summarize input metadata</td>
-<td>CSV file</td>
+<td>csv filePath</td>
 <td>Data frame + duplicates report</td>
 </tr>
 <tr>
 <td><code><a href="reference/read_and_parse_dict.html">read_and_parse_dict()</a></code></td>
 <td>Load REDCap dictionary and extract coded lists</td>
-<td>dictPath</td>
+<td>optional dictPath</td>
 <td>List of mini dictionaries</td>
 </tr>
 <tr>
 <td><code><a href="reference/compare_cols_to_dict.html">compare_cols_to_dict()</a></code></td>
 <td>Check for missing or extra columns vs REDCap dictionary</td>
-<td>Data + dict</td>
+<td>Data + optionaldictPath</td>
 <td>Harmonized data frame</td>
 </tr>
 <tr>
 <td><code><a href="reference/scan_mismatched_levels.html">scan_mismatched_levels()</a></code></td>
 <td>Scan for values that don’t match allowed dictionary codes</td>
-<td>Data + dicts</td>
-<td>Warnings</td>
+<td>Data + col_to_check + dicts</td>
+<td>Warnings to inform your manual processing (if necessary)</td>
 </tr>
 <tr>
 <td><code><a href="reference/tidy_up_values.html">tidy_up_values()</a></code></td>
@@ -126,7 +126,7 @@
 <td>Cleaned data</td>
 </tr>
 <tr>
-<td><code>create_final_diagnosis()</code></td>
+<td><code><a href="reference/create_diagnostic_result_rule.html">create_diagnostic_result_rule()</a></code></td>
 <td>Derive final diagnostic result from test columns</td>
 <td>Data</td>
 <td>updated <code>diagnostic_result</code>(df)</td>
@@ -140,7 +140,7 @@
 <tr>
 <td><code><a href="reference/final_processing.html">final_processing()</a></code></td>
 <td>Final formatting &amp; generation of REDCap-ready forms</td>
-<td>Data + dict</td>
+<td>Data + optionaldictPath + access_group</td>
 <td>Diagnostic + Sequencing forms</td>
 </tr>
 </tbody>
