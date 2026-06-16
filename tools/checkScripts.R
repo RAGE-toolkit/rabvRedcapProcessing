@@ -7,16 +7,17 @@
   # if not already installed
   # install.packages("devtools") 
 devtools::install_github("RAGE-toolkit/rabvRedcapProcessing", force = TRUE)
-library(rabvRedcapProcessing)
+install.packages("here")
+library(here)
 
-library(dplyr) # in addition, we also use dplyr to manipulate data in this script
+#library(dplyr) # in addition, we also use dplyr to manipulate data in this script
 
-## read_data ######
+## read_data ######change filepath as needed
+# this should find the test data in the rage_redcap github repo if you have it cloned on your laptop (no need to change filepath)
+filepath <- here("rage_redcap","data", "test_data", "test-metadata.csv")
 
 # replace this with the path to your data
-myData <- read_data(filepath = system.file("extdata", 
-                                           "test_data.csv", 
-                                           package = "rabvRedcapProcessing"))
+myData <- read_data(filepath)
 
 ## read_and_parse_dict#####
   # There is an inbuilt dictionsry, but you can specify a url to a customized dictionary
@@ -66,11 +67,35 @@ recoded_data <- recode_data(dicts = myDicts, dayta = updated_data2)
 # final process ##########
 out_data <- final_processing(mydata = recoded_data)
 
+# derive output filenames from input file
+input_dir <- dirname(filepath)
 
-names(out_data)
+input_name <- tools::file_path_sans_ext(
+  basename(filepath)
+)
 
-write.csv(out_data$diagnostic_form, "~/Desktop/diagnostic_form.csv", row.names = F)
-write.csv(out_data$sequencing_form, "~/Desktop/sequencing_form.csv", row.names = F)
+diagnostic_outfile <- file.path(
+  input_dir,
+  paste0(input_name, "_diagnostic_form.csv")
+)
+
+sequencing_outfile <- file.path(
+  input_dir,
+  paste0(input_name, "_sequencing_form.csv")
+)
+
+# write outputs
+write.csv(
+  out_data$diagnostic_form,
+  diagnostic_outfile,
+  row.names = FALSE
+)
+
+write.csv(
+  out_data$sequencing_form,
+  sequencing_outfile,
+  row.names = FALSE
+)
 
 
 
