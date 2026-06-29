@@ -29,7 +29,7 @@ tidy_up_values <- function(df) {
       ),
       
       sample_buffer = dplyr::case_when(
-        str_to_lower(sample_buffer) %in% c("none", "no buffer") ~ "No_buffer_fresh",
+        str_to_lower(sample_buffer) %in% c("none", "no buffer") ~ "None",
         str_detect(tolower(sample_buffer), "glycerol") ~ "Glycerol-saline",
         str_detect(tolower(sample_buffer), "shield") ~ "RNAshield",
         str_detect(tolower(sample_buffer), "rnala") ~ "RNAlater",
